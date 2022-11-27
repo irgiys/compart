@@ -1,5 +1,16 @@
-<?php 
- ?>
+<?php
+    include "./functions/register.php";
+    $error = false;
+    if(isset($_POST["username"])){
+        if(register($_POST) > 0){
+            echo "<script>
+            alert('Account succesfully created !')
+            </script>";
+        }else{
+            $error = true;
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -23,31 +34,37 @@
                     <form action="" method="post" class="d-flex justify-content-center">
                         <div class="d-flex flex-column justify-content-center vh-100 w-75 px-5">
                             <h1>Sign Up to Compart</h1>
+                            <p>Already have Account ?
+                                <a class="text-decoration-none text-altprimary" href="login.php">Sign In</a>
+                            </p>
+                            <?php if($error) : ?>
+                                        <span class="text-danger d-block">User already exist !</span>
+                            <?php endif ?>
                             <div class="my-4 row">
                                 <div class="col">
                                     <label for="fullname">
                                         Fullname
                                     </label>
-                                    <input class="form-control bg-gray mt-1" type="text" id="fullname" name="fullname">
+                                    <input required class="form-control bg-gray mt-1" type="text" id="fullname" name="fullname">
                                 </div>
                                 <div class="col">
                                     <label for="username">
                                         Username
                                     </label>
-                                    <input class="form-control bg-gray mt-1" type="text" id="username" name="username">
+                                    <input required class="form-control bg-gray mt-1" type="text" id="username" name="username">
                                 </div>
                             </div>
                             <div>
                                 <label for="email">
                                     Email 
                                 </label>
-                                <input class="form-control bg-gray mt-1" type="email" id="email" name="email">
+                                <input required class="form-control bg-gray mt-1" type="email" id="email" name="email">
                             </div>
                             <div class="my-4">
                                 <label for="password">
                                     Password 
                                 </label>
-                                <input class="form-control bg-gray mt-1" type="password" id="password" name="password">
+                                <input required class="form-control bg-gray mt-1" type="password" id="password" name="password">
                             </div>
                             <div class="input-group my-3">
                                     <label class="input-group-text" for="inputGroupSelect01">Role</label>
@@ -57,7 +74,7 @@
                                     </select>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-altprimary text-white px-5 mt-3 fs-sm">Create account</button>
+                                <button type="submit" class="btn btn-altsecondary text-white px-5 mt-3 fs-sm">Create account</button>
                             </div>
                         </div>
                     </form>

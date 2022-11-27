@@ -22,8 +22,15 @@ $custom-colors: (
 
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
-$font-family-sans-serif: "Poppins", sans-serif;
 
+// override default variabel
+$font-family-sans-serif: "Poppins", sans-serif;
+$font-size-root: null;
+$font-size-base: 1rem; // Assumes the browser default, typically `16px`
+$font-size-sm: $font-size-base * 0.5;
+$font-size-lg: $font-size-base * 0.5;
+
+// costum class
 .font-fair {
     font-family: "Playfair Display", serif;
 }
