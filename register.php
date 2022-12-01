@@ -1,8 +1,8 @@
 <?php
     include "./functions/register.php";
     $error = false;
-    if(isset($_POST["username"])){
-        if(register($_POST) > 0){
+    if(isset($_POST["role"])){
+        if(register($_POST) !== 0){
             echo "<script>
             alert('Account succesfully created !')
             </script>";

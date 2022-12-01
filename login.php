@@ -1,9 +1,8 @@
 <?php
-
 include "./functions/login.php";
 $error = false;
 $username = "";
-if(isset($_POST["username"])){
+if(isset($_POST["role"])){
     if(login($_POST)){
         $error = false;
     }
@@ -55,6 +54,13 @@ if(isset($_POST["username"])){
                                     Password 
                                 </label>
                                 <input class="form-control bg-gray mt-1" type="password" id="password" name="password">
+                            </div>
+                            <div class="input-group mt-4">
+                                    <label class="input-group-text" for="inputGroupSelect01">Role</label>
+                                    <select class="form-select" id="inputGroupSelect01" name="role">
+                                        <option selected value="1">Customer</option>
+                                        <option value="2">Seller</option>
+                                    </select>
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-altprimary text-white px-5 mt-3 fs-sm">Login</button>

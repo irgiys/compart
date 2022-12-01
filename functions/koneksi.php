@@ -1,3 +1,3 @@
 <?php 
-$conn = mysqli_connect("localhost", "root", "", "db_compart");
+$conn = mysqli_connect("localhost", "root", "", "compart");
 ?>
