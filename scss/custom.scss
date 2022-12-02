@@ -34,6 +34,11 @@ $font-size-lg: $font-size-base * 0.5;
 .font-fair {
     font-family: "Playfair Display", serif;
 }
-
+.h-fit {
+    height: fit-content !important;
+}
+.fs-sm {
+    font-size: 0.7rem;
+}
 // Option A: Include all of Bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";

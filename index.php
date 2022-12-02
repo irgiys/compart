@@ -1,6 +1,6 @@
 <?php
-session_start();
-// $fullname = $_SESSION["fullname"];
+include("./functions/session.php");
+user();
 if(isset($_GET["logout"]) == "false"){
     echo "<script>
             alert('logout dulu')

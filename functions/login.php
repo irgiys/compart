@@ -18,6 +18,9 @@ function login($data){
             // cek password
             $row = mysqli_fetch_assoc($result);
             if(password_verify($password, $row["password"])){
+                $_SESSION["fullname"] = $row["fullname"]; 
+                $_SESSION["id"] = $row["id"];
+                $_SESSION["role"] = $role;
                 $role == 1 ? header("location:index.php") : header("location:dashboard.php");
                 return $row;
             }

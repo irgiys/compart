@@ -2,7 +2,7 @@
     include "./functions/register.php";
     $error = false;
     if(isset($_POST["role"])){
-        if(register($_POST) !== 0){
+        if(register($_POST) > 0){
             echo "<script>
             alert('Account succesfully created !')
             </script>";
@@ -21,6 +21,13 @@
         <link rel="stylesheet" href="css/custom.min.css" />
     </head>
     <body>
+    <?php if($error) : ?>
+            <div class="text-white bg-danger vw-100 d-flex position-absolute justify-content-center align-items-center py-2">
+                <span class="">
+                    Username or email you entered already exist. Please use another one and try again.
+                </span>
+            </div>
+        <?php endif ?>
         <div class="overflow-hidden container-fluid text-altdark">
             <div class="row min-vw-100 min-vh-100">
                 <div class="col-sm-4 d-md-flex flex-column justify-content-center d-none bg-altsecondary p-md-5">
@@ -37,9 +44,6 @@
                             <p>Already have Account ?
                                 <a class="text-decoration-none text-altprimary" href="login.php">Sign In</a>
                             </p>
-                            <?php if($error) : ?>
-                                        <span class="text-danger d-block">User already exist !</span>
-                            <?php endif ?>
                             <div class="my-4 row">
                                 <div class="col">
                                     <label for="fullname">

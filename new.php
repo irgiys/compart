@@ -1,3 +1,33 @@
+<?php
+include("./functions/product.php");
+include("./functions/session.php");
+
+$fullname = $_SESSION["fullname"];
+$name = "";
+$desc = "";
+$category = "";
+$merk = "";
+$price = "";
+$discount = "";
+$quantity = "";
+
+$_POST["seller_id"] = $_SESSION["id"];
+    if(isset($_POST["name"])){
+        if(addProduct($_POST) > 0){
+            echo "<script>
+            alert('Product succesfully added !')
+            </script>";
+        }else{
+            $name = $_POST["name"];
+            $desc = $_POST["desc"];
+            $category = $_POST["category"];
+            $merk = $_POST["merk"];
+            $price = $_POST["price"];
+            $discount = $_POST["discount"];
+            $quantity = $_POST["quantity"];
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +40,7 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-light">
     <div class="container-fluid">
-            <a class="navbar-brand fs-5" href="dashboard.php">your name</a>
+            <a class="navbar-brand fs-5" href="dashboard.php"><?= $fullname ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -20,7 +50,7 @@
                 <a class="nav-link" href="#">FAQ</a>
                 <a class="nav-link" href="#">About</a>
                 <a class="nav-link" href="#">Help</a>
-                <a class="nav-link" href="#">Logout</a>
+                <a class="nav-link" href="./functions/logout.php">Logout</a>
                </div>
         </div>
     </div>
@@ -36,52 +66,61 @@
                 </a>
                 settings.</p>
             </div>
-            
-        <form action="" method="post">
+        <div class="d-flex justify-content-center">
+            <form action="" method="POST" enctype="multipart/form-data" class="w-100 px-1 px-md-5">
             <div class="mt-5 mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Product Name</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your awesome product name" name="name" value="<?= $name ?>">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Something about your product..."
+                name="desc" value="<?= $desc ?>"></textarea>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-12 col-sm-4">
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Category</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Mouse"
+                        name="category"
+                        value="<?= $category ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Merk</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Intel" name="merk"
+                        value="<?= $merk ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Price</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="$">
+                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="10.12$" name="price" step=".01" 
+                        value="<?= $price ?>"
+                        >
                     </div>
                 </div>
                 <div class="col">
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Discount</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="%">
+                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="2%" name="discount"
+                        value="<?= $discount ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="1">
+                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="10" name="quantity"
+                        value="<?= $quantity ?>"
+                        >
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Picture</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <input class="form-control" type="file" id="formFile" name="picture">
                     </div>
                     </div>
                 </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-altprimary">Sell</button>   
+            <div class="mb-3 ">
+                <button type="submit" class="btn btn-altprimary px-5">Sell</button>   
             </div>
-
         </form>
-     </div>
+        </div>
+    </div>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

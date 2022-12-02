@@ -1,0 +1,73 @@
+<?php 
+include "koneksi.php";
+function addProduct($data){
+    global $conn;
+    $name = $data["name"]; 
+    $desc = $data["desc"]; 
+    $category = $data["category"]; 
+    $merk = $data["merk"];
+    $seller_id = $data["seller_id"];
+    $price = $data["price"]; 
+    $quantity = $data["quantity"];
+    $discount = $data["discount"];
+    $created_at = date("Y-m-d H:i:s");
+    $picture = upload();
+    if(!$picture){
+        return false;
+    }
+    
+    $inventory_query = "INSERT INTO product_inventory (`id`, `quantity`, `created_at`, `modified_at`, `deleted_at`)
+        VALUES (NULL, '$quantity', '$created_at', '$created_at', NULL)
+    ";
+
+    if ($conn->query($inventory_query) === TRUE) {
+        $inventory_id = $conn->insert_id;
+      } else {
+        echo "Error: " . $inventory_query . "<br>" . $conn->error;
+      }
+
+      $query = "INSERT INTO product (`id`, `name`, `desc`, `category`, `merk`, `picture`, `price`, `discount`, `created_at`, `modified_at`, `deleted_at`, `inventory_id`, `seller_id`) 
+      VALUES (NULL, '$name', '$desc', '$category', '$merk', '$picture', '$price', '$discount', '$created_at', '$created_at', NULL, '$inventory_id','$seller_id')";
+       
+      mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+    };
+function upload(){
+        $nameFile = $_FILES["picture"]["name"];
+        $sizeFile = $_FILES["picture"]["size"];
+        $error = $_FILES["picture"]["error"];
+        $tmpName = $_FILES["picture"]["tmp_name"];
+    
+        // cek apakkah tidakad gambar yang diupload
+        if($error == 4){
+            echo "<script>
+                    alert(`Pilih gambar yang mau diupload`)
+                    </script>";
+            return false;
+        }
+        // cek apakah yang diupload adalah gambar
+        $validExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+        $pictureExtension = explode(".", $nameFile);
+        $pictureExtension = strtolower(end($pictureExtension));
+    
+        if(!in_array($pictureExtension, $validExtensions)){
+            echo "<script>
+                    alert(`Yang di upload bukan gambar`)
+            </script>";
+            return false;
+        }
+        // cek jika gambar ukurannya terlalu besar
+        if($sizeFile > 1000000){
+            echo "<script>
+                    alert(`Ukuran gambar besaarr`)
+            </script>";
+            return false;
+        }
+        $newNameFile = uniqid();
+        $newNameFile .= ".";
+        $newNameFile .= $pictureExtension;
+        // lolos gambar siap diupload
+        move_uploaded_file($tmpName,"assets/images/" . $newNameFile);
+        return $newNameFile;
+    }    
+?>
