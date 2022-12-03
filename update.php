@@ -1,21 +1,34 @@
 <?php
-include("./functions/product.php");
+include("./functions/koneksi.php");
 include("./functions/session.php");
+include("./functions/product.php");
 seller();
+$id = $_GET['id'];
+$query = "SELECT * FROM product WHERE id = '$id'";
+$result = mysqli_query($conn, $query);
+$product = mysqli_fetch_assoc($result);
+if ($product === null) {
+    header("location:dashboard.php");
+    exit;
+}
+$idInventory = $product["inventory_id"];
+$queryInventory = "SELECT * FROM product_inventory WHERE id = '$idInventory'";
+$sql = mysqli_query($conn, $queryInventory);
+$quantity = $resultInventory = mysqli_fetch_assoc($sql)["quantity"];
 $fullname = $_SESSION["fullname"];
-$name = "";
-$desc = "";
-$category = "";
-$merk = "";
-$price = "";
-$discount = "";
-$quantity = "";
-
-$_POST["seller_id"] = $_SESSION["id"];
+$name = $product["name"];
+$desc = $product["desc"];
+$category = $product["category"];
+$merk = $product["merk"];
+$price = $product["price"];
+$discount = $product["discount"];
+$picture = $product["picture"];
     if(isset($_POST["name"])){
-        if(addProduct($_POST) > 0){
+    global $id, $idInventory;
+        if(updateProduct($_POST, $id, $idInventory) > 0){
             echo "<script>
-            alert('Product succesfully added !')
+            alert('Product succesfully updated !')
+            document.location.href = 'dashboard.php'
             </script>";
         }else{
             $name = $_POST["name"];
@@ -39,41 +52,36 @@ $_POST["seller_id"] = $_SESSION["id"];
 </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-light">
-    <div class="container-fluid px-md-5 py-2">
+    <div class="container-fluid">
             <a class="navbar-brand fs-5" href="dashboard.php"><?= $fullname ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link px-4" href="profile_seller.php">Profile</a>
-                <a class="nav-link px-4" href="#">Help</a>
-                <a class="nav-link px-4 bg-altsecondary rounded" href="./functions/logout.php">Logout</a>
+                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="#">Help</a>
+                <a class="nav-link bg-altsecondary rounded" href="./functions/logout.php">Logout</a>
                </div>
         </div>
     </div>
     </nav>
     <div class="container-fluid">
-        <div class="mt-5 px-md-5">
-            <h1>
-                Let's sell a new product
-            </h1>
-            <p>To sell a new product, make sure your address is filled in. on the 
-                <a href="profile.php">
-                    profile
-                </a>
-                settings.</p>
-            </div>
+        <div class="mt-2">
+            <h2>
+                Update a product 
+            </h2>
         <div class="d-flex justify-content-center">
             <form action="" method="POST" enctype="multipart/form-data" class="w-100 px-1 px-md-5">
-            <div class="mt-5 mb-3">
+            <input type="hidden" name="oldPicture" value="<?= $product["picture"] ?>">
+            <div class="mt-4 mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your awesome product name" name="name" value="<?= $name ?>">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Description</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Something about your product..."
-                name="desc" value="<?= $desc ?>"></textarea>
+                name="desc"><?= $desc ?></textarea>
             </div>
             <div class="row">
                 <div class="col-12 col-sm-4">
@@ -108,13 +116,18 @@ $_POST["seller_id"] = $_SESSION["id"];
                         >
                     </div>
                     <div class="mb-3">
-                        <label for="formFile" class="form-label">Picture</label>
-                        <input class="form-control" type="file" id="formFile" name="picture">
+                        <div class="row">
+                            <img class="col-2" src="./assets/images/<?= $picture ?>" alt="<?= $name ?>">
+                            <div class="col">
+                                <label for="formFile" class="form-label">Picture</label>
+                                <input class="form-control" type="file" id="formFile" name="picture">
+                            </div>
+                        </div>
                     </div>
                     </div>
                 </div>
             <div class="mb-3 ">
-                <button type="submit" class="btn btn-altprimary px-5">Sell</button>   
+                <button type="submit" class="btn btn-altprimary px-5">Update</button>   
             </div>
         </form>
         </div>

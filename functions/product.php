@@ -26,10 +26,9 @@ function addProduct($data){
         echo "Error: " . $inventory_query . "<br>" . $conn->error;
       }
 
-      $query = "INSERT INTO product (`id`, `name`, `desc`, `category`, `merk`, `picture`, `price`, `discount`, `created_at`, `modified_at`, `deleted_at`, `inventory_id`, `seller_id`) 
-      VALUES (NULL, '$name', '$desc', '$category', '$merk', '$picture', '$price', '$discount', '$created_at', '$created_at', NULL, '$inventory_id','$seller_id')";
-       
-      mysqli_query($conn, $query);
+    $query = "INSERT INTO `product` (`id`, `name`, `desc`, `category`, `merk`, `picture`, `price`, `discount`, `created_at`, `modified_at`, `deleted_at`, `inventory_id`, `seller_id`) VALUES (NULL, '$name', '$desc', '$category', '$merk', '$picture', '$price', '$discount', '$created_at', NULL, NULL, '$inventory_id', '$seller_id')";
+    mysqli_query($conn, $query);
+
     return mysqli_affected_rows($conn);
     };
 function upload(){
@@ -70,4 +69,30 @@ function upload(){
         move_uploaded_file($tmpName,"assets/images/" . $newNameFile);
         return $newNameFile;
     }    
+function updateProduct($data, $id, $idInventory){
+    global $conn;
+    $name = $data["name"]; 
+    $desc = $data["desc"]; 
+    $category = $data["category"]; 
+    $merk = $data["merk"];
+    $price = $data["price"]; 
+    $quantity = $data["quantity"];
+    $discount = $data["discount"];
+    $oldPicture = $data["oldPicture"];
+    $modified_at = date("Y-m-d H:i:s");
+    if ($_FILES["picture"]["error"] == 4) {
+        $picture = $oldPicture;
+    }else{
+        $picture = upload(); 
+    }
+
+    $query = "UPDATE `product` SET `name` = '$name', `desc` = '$desc', `category` = '$category',`merk` = '$merk', `picture` = '$picture', `price` = '$price', `discount` = '$discount', `modified_at` = '$modified_at' WHERE `product`.`id` = $id";
+
+    $inventory_query = "UPDATE `product_inventory` SET `quantity` = '$quantity', `modified_at` = '$modified_at' WHERE `product_inventory`.`id` = $idInventory
+    ";
+
+    mysqli_query($conn, $inventory_query);
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
 ?>

@@ -8,9 +8,9 @@ function user(){
         exit;
     }
 }
-function seller(){
+function seller($url = "login.php"){
     if(!isset($_SESSION["role"]) && $_SESSION["role"] != 2){
-        header("location:login.php");
+        header("location:$url");
         exit;
     }
 }
