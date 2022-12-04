@@ -51,28 +51,49 @@ $picture = $product["picture"];
     <link rel="stylesheet" href="css/custom.min.css" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm bg-light">
-    <div class="container-fluid">
-            <a class="navbar-brand fs-5" href="dashboard.php"><?= $fullname ?></a>
+<nav class="navbar navbar-expand-sm bg-light">
+    <div class="container-fluid px-md-5 py-2">
+            <a class="navbar-brand fs-5 m-0 fw-semibold font-fair" href="dashboard.php"> compart
+            <span class="ms-4 translate-middle badge rounded-pill bg-altsecondary">seller</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="#">Profile</a>
-                <a class="nav-link" href="#">Help</a>
-                <a class="nav-link bg-altsecondary rounded" href="./functions/logout.php">Logout</a>
-               </div>
+                <a class="nav-link px-4" href="#">Faq</a>
+                <a class="nav-link px-4" href="#">Help</a>
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle after-none" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                                <?= $fullname ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item d-flex justify-content-around" href="profile_seller.php"> 
+                                    <span>
+                                        Profile 
+                                    </span>
+                                    <img src="./assets/svg/chevron-right.svg" alt="right">
+                                </a></li>
+                                <li><a class="dropdown-item d-flex justify-content-around" href="./functions/logout.php">
+                                    <span>
+                                        Logout
+                                    </span>
+                                    <img src="./assets/svg/chevron-right.svg" alt="right"></a>
+                                </li>
+                            </ul>
+                </div>
+            </div>
         </div>
     </div>
     </nav>
-    <div class="container-fluid">
-        <div class="mt-2">
+<div class="container-fluid px-md-5 mt-5">
             <h2>
                 Update a product 
             </h2>
         <div class="d-flex justify-content-center">
-            <form action="" method="POST" enctype="multipart/form-data" class="w-100 px-1 px-md-5">
+            <form action="" method="POST" enctype="multipart/form-data" class="w-100">
             <input type="hidden" name="oldPicture" value="<?= $product["picture"] ?>">
             <div class="mt-4 mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Product Name</label>
@@ -127,7 +148,8 @@ $picture = $product["picture"];
                     </div>
                 </div>
             <div class="mb-3 ">
-                <button type="submit" class="btn btn-altprimary px-5">Update</button>   
+                <a href="dashboard.php" class="btn btn-altsecondary text-white px-3 fs-sm"><</a>
+                <button type="submit" class="btn btn-altprimary px-5 text-white">Update</button>   
             </div>
         </form>
         </div>

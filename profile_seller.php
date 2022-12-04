@@ -44,14 +44,19 @@ if($address === NULL){
 <body>
     <div class="overflow-hidden container-fluid text-altdark">
             <div class="row min-vw-100 min-vh-100">
-                <div class="col-sm-4 d-md-flex flex-column justify-content-center d-none bg-altprimary p-5">
+                <div class="col-sm-4 d-lg-flex flex-column justify-content-center d-none bg-altprimary p-5">
+                    <h1 class="text-capitalize"><?= $fullname ?>'s</h1>
+                    <h2>Profile</h2>
                     <img class="image-fluid" src="./assets/svg/oranglaptop.svg" alt="gambar orang">
                 </div>
                 <div class="col">
                     <form action="" method="POST" class="d-flex justify-content-center">
                         <input type="hidden" name="seller_id" value="<?= $id ?>">
                         <div class="d-flex flex-column justify-content-center vh-100 w-75  px-md-5 px-sm-1">
-                            <h1 class="text-capitalize"><?= $fullname ?> profile</h1>
+                            <div class="d-lg-none">
+                                <h1 class="text-capitalize"><?= $fullname ?>'s</h1>
+                                <h2>Profile</h2>
+                            </div>
                             <div class="row mt-2">
                                 <div class="col-sm-4 mb-4">
                                     <label for="username">

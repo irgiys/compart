@@ -29,7 +29,7 @@ if(isset($_POST["role"])){
         <?php endif ?>
         <div class="overflow-hidden container-fluid text-altdark">
             <div class="row min-vw-100 min-vh-100">
-                <div class="col-sm-4 d-md-flex flex-column justify-content-center d-none bg-altprimary p-5">
+                <div class="col-sm-4 d-lg-flex flex-column justify-content-center d-none bg-altprimary p-5">
                     <p class="font-fair fs-4">compart</p>
                     <h1 class="fs-2">
                         Discover the world's top Hardware
@@ -38,7 +38,7 @@ if(isset($_POST["role"])){
                 </div>
                 <div class="col">
                     <form action="" method="post" class="d-flex justify-content-center">
-                        <div class="d-flex flex-column justify-content-center vh-100 w-75  px-md-5 px-sm-1">
+                        <div class="d-flex flex-column justify-content-center vh-100 w-75  px-md-5">
                             <h1>Sign In</h1>
                             <p>New here ?
                                 <a class="text-decoration-none text-altsecondary" href="register.php">Create Account</a>

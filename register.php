@@ -30,28 +30,28 @@
         <?php endif ?>
         <div class="overflow-hidden container-fluid text-altdark">
             <div class="row min-vw-100 min-vh-100">
-                <div class="col-sm-4 d-md-flex flex-column justify-content-center d-none bg-altsecondary p-md-5">
-                    <p class="font-fair fs-5">compart</p>
-                    <h1 class="fs-4">
+                <div class="col-sm-4 d-lg-flex flex-column justify-content-center d-none bg-altsecondary p-5">
+                    <p class="font-fair fs-4">compart</p>
+                    <h1 class="fs-2">
                         Discover the world's top Hardware
                     </h1>
                     <img class="image-fluid" src="./assets/svg/orangpaket.svg" alt="gambar orang">
                 </div>
                 <div class="col">
                     <form action="" method="post" class="d-flex justify-content-center">
-                        <div class="d-flex flex-column justify-content-center vh-100 w-75 px-5">
+                        <div class="d-flex flex-column justify-content-center vh-100 w-75 px-md-5">
                             <h1>Sign Up to Compart</h1>
-                            <p>Already have Account ?
+                            <p class="mb-0">Already have Account ?
                                 <a class="text-decoration-none text-altprimary" href="login.php">Sign In</a>
                             </p>
                             <div class="my-4 row">
-                                <div class="col">
+                                <div class="col-md mt-0 mt-sm-2">
                                     <label for="fullname">
                                         Fullname
                                     </label>
                                     <input required class="form-control bg-gray mt-1" type="text" id="fullname" name="fullname">
                                 </div>
-                                <div class="col">
+                                <div class="col-md mt-0 mt-sm-2">
                                     <label for="username">
                                         Username
                                     </label>
