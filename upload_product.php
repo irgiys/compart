@@ -15,7 +15,8 @@ $_POST["seller_id"] = $_SESSION["id"];
     if(isset($_POST["name"])){
         if(addProduct($_POST) > 0){
             echo "<script>
-            alert('Product succesfully added !')
+            alert('Product succesfully uploaded !')
+            document.location.href = 'dashboard.php'
             </script>";
         }else{
             $name = $_POST["name"];
@@ -137,7 +138,7 @@ $_POST["seller_id"] = $_SESSION["id"];
                 </div>
             <div class="mb-3 ">
                 <a href="dashboard.php" class="btn btn-altsecondary text-white px-3 fs-sm"><</a>
-                <button type="submit" class="btn btn-altprimary px-5 text-white">Sell</button>   
+                <button type="submit" class="btn btn-altprimary px-5 text-white">Upload</button>   
             </div>
         </form>
         </div>

@@ -138,7 +138,7 @@ $picture = $product["picture"];
                     </div>
                     <div class="mb-3">
                         <div class="row">
-                            <img class="col-2" src="./assets/images/<?= $picture ?>" alt="<?= $name ?>">
+                            <img class="col-2" src="./assets/images/products/<?= $picture ?>" alt="<?= $name ?>">
                             <div class="col">
                                 <label for="formFile" class="form-label">Picture</label>
                                 <input class="form-control" type="file" id="formFile" name="picture">

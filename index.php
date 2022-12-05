@@ -1,7 +1,9 @@
 <?php
 include("./functions/session.php");
+include("./functions/koneksi.php");
 user();
 $fullname = $_SESSION["fullname"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,7 +88,9 @@ $fullname = $_SESSION["fullname"];
             </div>      
         </div>
         <!-- end carousel -->
-        <h2>Choice Category</h2>
+        <div class="my-5">
+            <h3>Choose by Category</h3>
+        </div>
     </div>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </body>

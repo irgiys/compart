@@ -23,10 +23,11 @@ while ($product = mysqli_fetch_assoc($result)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dasboard Seller</title>
     <link rel="stylesheet" href="css/custom.min.css" />
+
 </head>
-<body>
+<body class="min-vh-100">
     <nav class="navbar navbar-expand-sm bg-light">
-    <div class="container-fluid px-md-5 py-2">
+    <div class="container-fluid px-md-5">
             <a class="navbar-brand fs-5 m-0 fw-semibold font-fair" href="dashboard.php"> compart
             <span class="ms-4 translate-middle badge rounded-pill bg-altsecondary">seller</span>
             </a>
@@ -62,21 +63,51 @@ while ($product = mysqli_fetch_assoc($result)) {
         </div>
     </div>
     </nav>
-    <div class="container-fluid mt-5 px-md-5">
-        <div class="d-flex w-100 justify-content-between">
-            <p>All</p>
-            <a class="btn btn-altprimary text-white px-md-4 py-2" href="upload_product.php">
-                + Add New Product
-            </a>
-        </div>
-        <div class="row mt-4">
+    <div class="container-fluid px-md-5">
+        <ul class="nav nav-pills py-3">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Overview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Archive</a>
+            </li>
+        </ul>
+        <div class="mt-3">
+            <div class="d-flex justify-content-between w-100">
+                <div class="col-md-8">
+                    <input type="search" class="form-control" placeholder="Search Product" aria-label="Search Box" id="searchInput" oninput="setTimeout(()=>search(),500)">
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-altprimary text-white w-100" href="upload_product.php">
+                    <span>
+                        +
+                    </span>
+                    <span class="d-none d-md-inline">
+                        Add New 
+                    </span>    
+                    </a>
+                </div>
+        </div>        
+    </div>
+        <div class="row mt-4 justify-content-around">
+            <div class="d-none h-100" id="result">
+                <h1>
+                    No Results Found
+                </h1>
+                <p>
+                    Your search did not return any results.
+                </p>
+            </div>
             <?php foreach ($products as $key => $product) :?>
                 <!-- strlen($product["name"])  -->
-                <div class="card col-sm-4 m-2" style="width: 15rem;">
-                    <img src="./assets/images/<?= $product["picture"] ?>" class="image-card" >
+                <div class="card col-sm-4 m-2" style="width: 15rem;" id="product">
+                    <img src="./assets/images/products/<?= $product["picture"] ?>" class="image-card" >
                     <div class="d-flex flex-column justify-content-between flex-auto flex-auto pb-3">
                         <div>
-                            <h6 class="card-title"><?= $product["name"] ?></h6>
+                            <h6 class="card-title mt-2"><?= $product["name"] ?></h6>
                             <?php if (strlen($product["name"]) < 30) { ?>
                                  <p class="fs-sm mb-1"><?= cutword($product["desc"], 110) ?></p>
                             <?php }elseif(strlen($product["name"]) < 50){ ?>
@@ -108,6 +139,27 @@ while ($product = mysqli_fetch_assoc($result)) {
             <?php endforeach ?>
         </div>
     </div>
+    <!-- <footer class="bg-gray mt-5 p-5 text-center">
+        Made with ☕ by Kelompok 4 🤝 
+    </footer> -->
+    <script>
+        function search(){
+        let searchInput = document.getElementById("searchInput").value;
+        let result = document.getElementById("result");
+        let products = document.querySelectorAll("#product")
+        let i = 0
+        products.forEach(product => {
+            // console.log(product.innerText.toLowerCase());
+            if(product.innerText.toLowerCase().includes(searchInput.toLowerCase())){
+                product.classList.remove("d-none");
+                i++;
+            }else{
+                product.classList.add("d-none");
+            }
+        });
+        i === 0 ? result.classList.remove("d-none") : result.classList.add("d-none");
+        }
+    </script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

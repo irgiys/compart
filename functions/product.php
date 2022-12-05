@@ -66,7 +66,7 @@ function upload(){
         $newNameFile .= ".";
         $newNameFile .= $pictureExtension;
         // lolos gambar siap diupload
-        move_uploaded_file($tmpName,"assets/images/" . $newNameFile);
+        move_uploaded_file($tmpName,"assets/images/products/" . $newNameFile);
         return $newNameFile;
     }    
 function updateProduct($data, $id, $idInventory){
