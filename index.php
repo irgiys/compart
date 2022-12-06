@@ -4,9 +4,6 @@ include("./functions/koneksi.php");
 include("./functions/cutword.php");
 user();
 $fullname = $_SESSION["fullname"];
-// $query = "SELECT p.id, p.name, p.desc, p.merk, p.picture, p.price, p.discount, pi.quantity, p.deleted_at, pi.id AS inventory_id
-//             FROM product AS p
-//             JOIN product_inventory AS pi ON (p.inventory_id = pi.id) WHERE p.deleted_at IS NULL AND p.seller_id = '$seller_id'";
 
 $query = "SELECT p.*, s.fullname FROM product AS p JOIN seller AS s ON (p.seller_id = s.id) WHERE deleted_at IS NULL ORDER BY p.discount DESC";
 $result = mysqli_query($conn, $query);
@@ -151,12 +148,6 @@ $result = mysqli_query($conn, $query);
     </div>
     <script>
         const allCat = document.getElementById("all");
-        // const keyboardCat = document.getElementById("keyboard");
-        // const mouseCat = document.getElementById("mouse");
-        // const monitorCat = document.getElementById("monitor");
-        // const cpuCoolerCat = document.getElementById("cpu_cooler");
-        // const ssdCat = document.getElementById("ssd");
-        // const motherBoardCat = document.getElementById("motherboard");
         const productCategory = document.querySelectorAll(".product-category");
         allCat.addEventListener("click", () => {
             productCategory.forEach(product => {

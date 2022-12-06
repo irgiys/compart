@@ -37,6 +37,9 @@ $font-size-lg: $font-size-base * 0.5;
 .font-fair {
     font-family: "Playfair Display", serif;
 }
+.w-fit {
+    width: fit-content;
+}
 .h-fit {
     height: fit-content !important;
 }
@@ -62,15 +65,24 @@ $font-size-lg: $font-size-base * 0.5;
 }
 .image-product {
     display: block;
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 300px;
     object-fit: cover;
     transition: transform 0.2s ease;
     &:hover {
         transform: scale(1.1);
     }
 }
-
+.image-thumbnail {
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.05);
+    }
+}
 .flex-auto {
     flex: auto;
 }

@@ -4,17 +4,22 @@ include("./functions/session.php");
 include("./functions/cutword.php");
 user();
 $id = $_GET['id'];
-$query = "SELECT * FROM product WHERE id = '$id'";
+// $query = "SELECT p.*, s.fullname FROM product AS p JOIN seller AS s ON (p.seller_id = s.id) WHERE deleted_at IS NULL ORDER BY p.discount DESC";
+
+$query = "SELECT p.*, pi.quantity, pi.sold, s.fullname
+          FROM product AS p 
+          JOIN product_inventory AS pi 
+                ON (p.inventory_id = pi.id)
+          JOIN seller AS s
+                ON (p.seller_id = s.id) WHERE p.id = '$id'";
 $result = mysqli_query($conn, $query);
 $product = mysqli_fetch_assoc($result);
 if ($product === null) {
     header("location:index.php");
     exit;
 }
+
 $idInventory = $product["inventory_id"];
-$queryInventory = "SELECT * FROM product_inventory WHERE id = '$idInventory'";
-$sql = mysqli_query($conn, $queryInventory);
-$quantity = $resultInventory = mysqli_fetch_assoc($sql)["quantity"];
 $fullname = $_SESSION["fullname"];
 $name = $product["name"];
 $desc = $product["desc"];
@@ -23,6 +28,8 @@ $merk = $product["merk"];
 $price = $product["price"];
 $discount = $product["discount"];
 $picture = $product["picture"];
+$sold = $product["sold"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,14 +93,49 @@ $picture = $product["picture"];
         <nav>
             <a class="text-decoration-none" href="index.php">Home </a>
             <p class="d-inline text-capitalize"> > <?= $category ?> > </p>
-            <p class="d-inline text-capitalize"><?= cutword($name,40) ?></p>
+            <p class="d-inline text-capitalize"><?= cutword($name,30) ?></p>
         </nav>
-        <div class="row bg-gray">
-            <div class="col-4">
-                <div class="border border bg-dark p-4 d-flex justify-content-center overflow-hidden">
+        <div class="row my-4">
+            <div class="col-md-4">
+                <div class="border rounded d-flex justify-content-center w-fit overflow-hidden">
                     <img class="image-product hover-zoom" src="./assets/images/products/<?= $picture ?>" alt="">
                 </div>
             </div>
+            <div class="col-md-5">
+                <h4 class="d-inline text-capitalize"> <?= $name ?></h4>
+                <!-- $product["price"] - ($product["discount"] / 100 * $product["price"] -->
+                <h6 class="pt-2">Sold <?= $sold ?></h6>
+                <h3 class="pt-4">$<?= $price - $discount / 100 * $price ?></h3>
+                <?php if($discount > 0) : ?>
+                    <span class="p-1 rounded bg-danger fw-semibold text-white"><?= $discount ?>%</span>
+                    <p class="d-inline mx-1 text-decoration-line-through">$<?= $price ?></p>
+                <?php endif ?>
+                <div class="border-top border-bottom my-4 py-2">
+                    <h6 class="py-2">Details</h6>
+                    <p class="fs-mb my-1">Category : 
+                        <span class="text-altprimary fw-semibold"><?= $category ?> </span>
+                    </p>
+                    <p class="fs-mb">Merk: 
+                        <span class="text-altprimary fw-semibold"><?= $merk ?> </span>
+                    </p>
+                    <p><?= $desc ?></p>
+                </div>
+                <div class="d-flex align-items-end">    
+                    <img src="./assets/svg/user.svg" alt="user" width="20" height="20">
+                    <h6 class="px-2 m-0 d-inline">
+                        <?= $product["fullname"] ?>
+                    </h6>
+            </div>
+            </div>
+                <div class="col">
+                    <div class="border rounded p-4">
+                        <h5>Set amount</h5>
+                        <div class="d-flex align-items-center">
+                            <img class="image-thumbnail" src="./assets/images/products/<?= $picture ?>" alt="<?= $name ?>">
+                            <p class="fs-mb"><?= cutword($name,20,"") ?></p>
+                        </div>
+                    </div>
+                </div>
         </div>    
     </div>
 <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
