@@ -14,6 +14,6 @@ function seller($url = "login.php"){
         exit;
     }
 }
-$_SESSION["fullname"];
-$_SESSION["id"];
+// $_SESSION["fullname"];
+// $_SESSION["id"];
 ?>

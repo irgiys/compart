@@ -2,14 +2,14 @@
 include "koneksi.php";
 function addProduct($data){
     global $conn;
-    $name = $data["name"]; 
-    $desc = $data["desc"]; 
-    $category = $data["category"]; 
-    $merk = $data["merk"];
+    $name = htmlspecialchars($data["name"]); 
+    $desc = htmlspecialchars($data["desc"]); 
+    $category = htmlspecialchars($data["category"]); 
+    $merk = htmlspecialchars($data["merk"]);
     $seller_id = $data["seller_id"];
-    $price = $data["price"]; 
-    $quantity = $data["quantity"];
-    $discount = $data["discount"];
+    $price = htmlspecialchars($data["price"]); 
+    $quantity = htmlspecialchars($data["quantity"]);
+    $discount = htmlspecialchars($data["discount"]);
     $created_at = date("Y-m-d H:i:s");
     $picture = upload();
     if(!$picture){

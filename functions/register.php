@@ -3,8 +3,8 @@ include "koneksi.php";
 function register($data){
     global $conn;
     $fullname = htmlspecialchars($data["fullname"]);       
-    $username = $data["username"];       
-    $email = $data["email"];       
+    $username = htmlspecialchars($data["username"]);       
+    $email = htmlspecialchars($data["email"]);       
     $role = $data["role"];
     $password = mysqli_real_escape_string($conn, $data["password"]);
     $created_at = date("Y-m-d H:i:s");

@@ -4,7 +4,7 @@
 $primary: #0074d9;
 $danger: #f65a52;
 $warning: #f0cf61;
-
+$dark: #1d1a31;
 $altprimary: #62bfad;
 $altdark: #1b1d1c;
 $gray: #f1f1f3;
@@ -20,6 +20,7 @@ $custom-colors: (
     "altdark": $altdark,
     "gray": $gray,
     "altsecondary": $altsecondary,
+    "dark": $dark,
 );
 
 // Merge the maps
@@ -42,11 +43,34 @@ $font-size-lg: $font-size-base * 0.5;
 .fs-sm {
     font-size: 0.7rem;
 }
-.image-card {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+.fs-mb {
+    font-size: 0.8rem;
 }
+.card {
+    overflow: hidden;
+}
+.image-card {
+    display: block;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 0 auto;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+.image-product {
+    display: block;
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
 .flex-auto {
     flex: auto;
 }

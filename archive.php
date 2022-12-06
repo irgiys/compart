@@ -8,7 +8,7 @@ $seller_id = $_SESSION["id"];
 
 $query = "SELECT p.id, p.name, p.desc, p.merk, p.picture, p.price, p.discount, pi.quantity, p.deleted_at, pi.id AS inventory_id
             FROM product AS p
-            JOIN product_inventory AS pi ON (p.inventory_id = pi.id) WHERE p.deleted_at IS NULL AND p.seller_id = '$seller_id'";
+            JOIN product_inventory AS pi ON (p.inventory_id = pi.id) WHERE p.deleted_at IS NOT NULL AND p.seller_id = '$seller_id'";
 $result = mysqli_query($conn, $query);
 $products = [];
 while ($product = mysqli_fetch_assoc($result)) {
@@ -38,45 +38,47 @@ while ($product = mysqli_fetch_assoc($result)) {
             <div class="navbar-nav">
                 <a class="nav-link px-4" href="#">Faq</a>
                 <a class="nav-link px-4" href="#">Help</a>
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                            <a class="nav-link dropdown-toggle after-none" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
                                 <?= $fullname ?>
                             </a>
-                            <ul class="dropdown-menu-end dropdown-menu">
-                                <li><a class="dropdown-item" href="profile_seller.php">Profile</a></li>
-                                <li><a class="dropdown-item" href="./functions/logout.php">Logout</a></li>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item d-flex justify-content-around" href="profile_seller.php"> 
+                                    <span>
+                                        Profile 
+                                    </span>
+                                    <img src="./assets/svg/chevron-right.svg" alt="right">
+                                </a></li>
+                                <li><a class="dropdown-item d-flex justify-content-around" href="./functions/logout.php">
+                                    <span>
+                                        Logout
+                                    </span>
+                                    <img src="./assets/svg/chevron-right.svg" alt="right"></a>
+                                </li>
                             </ul>
                 </div>
+            </div>
         </div>
     </div>
     </nav>
-    <div class="container-fluid px-md-5 mb-3">
+    <div class="container-fluid px-md-5">
         <ul class="nav nav-pills py-3">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="dashboard.php">Overview</a>
+                <a class="nav-link" href="dashboard.php">Overview</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Report</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="archive.php">Archive</a>
+                <a class="nav-link active" aria-current="page" href="#">Archive</a>
             </li>
         </ul>
         <div class="mt-3">
             <div class="d-flex justify-content-between w-100">
-                <div class="col-md-8">
+                <div class="col">
                     <input type="search" class="form-control" placeholder="Search Product" aria-label="Search Box" id="searchInput" oninput="setTimeout(()=>search(),500)">
-                </div>
-                <div class="col-md-2">
-                    <a class="btn btn-altprimary text-white w-100" href="upload_product.php">
-                    <span>
-                        +
-                    </span>
-                    <span class="d-none d-md-inline">
-                        Add New 
-                    </span>    
-                    </a>
                 </div>
         </div>        
     </div>
@@ -94,10 +96,10 @@ while ($product = mysqli_fetch_assoc($result)) {
                 <div class="card col-sm-4 m-2" style="width: 14rem;" id="product">
                     <img src="./assets/images/products/<?= $product["picture"] ?>" class="image-card" >
                     <div class="d-flex flex-column justify-content-between flex-auto flex-auto pb-3">
-                        <h6 class="card-title mt-2"><?= cutword($product["name"],40) ?></h6>
+                        <h6 class="card-title mt-2"><?= $product["name"] ?></h6>
                         <div>
                             <?php if (strlen($product["name"]) < 30) { ?>
-                                 <p class="fs-sm mb-1"><?= cutword($product["desc"], 80) ?></p>
+                                 <p class="fs-sm mb-1"><?= cutword($product["desc"], 100) ?></p>
                             <?php }elseif(strlen($product["name"]) < 50){ ?>
                                 <p class="fs-sm mb-1"><?= cutword($product["desc"], 40) ?></p>
                             <?php } else { ?>
@@ -119,9 +121,9 @@ while ($product = mysqli_fetch_assoc($result)) {
                                     <span class="bg-gray p-1 text-align-left rounded fs-sm align-self-end">stock <?= $product["quantity"]?></span>
                             </div>
                                     <div class="d-flex justify-content-between">
-                                        <a href="update_product.php?id=<?= $product["id"] ?>" class="btn btn-warning text-dark">Update</a>
-                                        <a href="delete_product.php?id=<?= $product["id"] ?>" class="btn btn-danger text-white" onclick="return confirm('Delete this product?')">
-                                            <img src="./assets/svg/trash.svg" alt="" srcset="">
+                                      <a href="update_product.php?id=<?= $product["id"] ?>" class="btn btn-warning text-dark">Update</a>
+                                        <a href="restore_product.php?id=<?= $product["id"] ?>" class="btn btn-danger">
+                                            <img src="./assets/svg/refresh.svg" alt="" srcset="">
                                         </a>
                                     </div>
                         </div>

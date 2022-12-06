@@ -1,9 +1,15 @@
 <?php
 include("./functions/session.php");
 include("./functions/koneksi.php");
+include("./functions/cutword.php");
 user();
 $fullname = $_SESSION["fullname"];
+// $query = "SELECT p.id, p.name, p.desc, p.merk, p.picture, p.price, p.discount, pi.quantity, p.deleted_at, pi.id AS inventory_id
+//             FROM product AS p
+//             JOIN product_inventory AS pi ON (p.inventory_id = pi.id) WHERE p.deleted_at IS NULL AND p.seller_id = '$seller_id'";
 
+$query = "SELECT p.*, s.fullname FROM product AS p JOIN seller AS s ON (p.seller_id = s.id) WHERE deleted_at IS NULL ORDER BY p.discount DESC";
+$result = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +17,7 @@ $fullname = $_SESSION["fullname"];
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Compart. Spend more smile less</title>
         <link rel="stylesheet" href="css/custom.min.css" />
     </head>
     <body>
@@ -22,7 +28,7 @@ $fullname = $_SESSION["fullname"];
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div class="navbar-nav px-4">
+            <div class="navbar-nav px-4 sm:align-items-center align-items-end">
                 <form action="search.php" method="post">
                     <div class="input-group">
                             <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">                            
@@ -91,7 +97,87 @@ $fullname = $_SESSION["fullname"];
         <div class="my-5">
             <h3>Choose by Category</h3>
         </div>
+        <div class="d-flex justify-content-center">
+            <?php
+            $categories = [];
+            while($product = mysqli_fetch_assoc($result)) : 
+            $categoryName = preg_replace('/\s+/', '_', $product["category"]);
+            array_push($categories,strtolower($categoryName));
+            $categories = array_unique($categories);
+            ?>
+            <?php endwhile ?>
+            <div>
+                <input type="radio" class="btn-check" name="options-outlined" id="all"  autocomplete="off" checked>
+                <label class="btn btn-outline-altdark" for="all">all</label>
+                <?php foreach ($categories as $i => $category) :
+                ?>
+                <input type="radio" class="btn-check btn-category"  name="options-outlined" id="<?= $category ?>"  autocomplete="off">
+                <label class="btn btn-outline-altdark" for="<?= $category ?>"><?= $category ?></label>
+                <?php endforeach ?>
+            </div>
+        </div>
+        <div class="my-3 row justify-content-center ">
+            <?php foreach ($result as $i => $product) :?>
+                <?php $categoryName = preg_replace('/\s+/', '_', $product["category"]); ?>
+                    <a class="card col-sm-4 m-2 px-2 text-dark text-decoration-none product-category" data-category="<?= $categoryName ?>" style="width: 12em;" href="detail_product.php?id=<?= $product["id"] ?>">
+                        <img src="./assets/images/products/<?= $product["picture"] ?>" class="image-card" >
+                        <div class="d-flex flex-column justify-content-between flex-auto flex-auto pb-3">
+                            <h6 class="card-title mt-2 fs-mb"><?= cutword($product["name"],20) ?></h6>
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-semibold">$<?= $product["price"] - ($product["discount"] / 100 * $product["price"])  ?></span>
+                                        <?php if($product["discount"] > 0) :?>
+                                            <div class="fs-mb pt-2">
+                                                <span class="p-1 bg-danger rounded text-white">%<?=$product["discount"]?></span>
+                                                <span class="ps-2 text-decoration-line-through">$<?= $product["price"] ?></span>
+                                            </div>
+                                            <?php endif ?>
+                                        </div>
+                                        <div class="align-self-end">
+                                            <h6 class="fs-sm m-0">
+                                                <img src="./assets/svg/user.svg" alt="user" width="10" height="10">
+                                                <?= $product["fullname"] ?>
+                                            </h6>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </a>
+            <?php endforeach ?>
+            </div>
+        </div>
     </div>
+    <script>
+        const allCat = document.getElementById("all");
+        // const keyboardCat = document.getElementById("keyboard");
+        // const mouseCat = document.getElementById("mouse");
+        // const monitorCat = document.getElementById("monitor");
+        // const cpuCoolerCat = document.getElementById("cpu_cooler");
+        // const ssdCat = document.getElementById("ssd");
+        // const motherBoardCat = document.getElementById("motherboard");
+        const productCategory = document.querySelectorAll(".product-category");
+        allCat.addEventListener("click", () => {
+            productCategory.forEach(product => {
+                    product.classList.remove("d-none");  
+            })
+        })
+        const buttons = document.querySelectorAll(".btn-category");
+        for(button of buttons){
+            button.addEventListener("click", function(){
+                productCategory.forEach(product => {
+                let show = product.dataset.category.toLowerCase()
+                if(show === this.id){
+                    product.classList.remove("d-none");
+                }else{
+                    product.classList.add("d-none");
+                }
+            })   
+                console.log(this.id);
+            })
+        }
+    </script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
