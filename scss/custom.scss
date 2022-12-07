@@ -2,8 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap");
 // Then add additional custom code here
 $primary: #0074d9;
-$danger: #ff4136;
-
+$danger: #f65a52;
+$warning: #f0cf61;
+$dark: #1d1a31;
 $altprimary: #62bfad;
 $altdark: #1b1d1c;
 $gray: #f1f1f3;
@@ -12,12 +13,14 @@ $altsecondary: #eec0db;
 $theme-colors: (
     "primary": $primary,
     "danger": $danger,
+    "warning": $warning,
 );
 $custom-colors: (
     "altprimary": $altprimary,
     "altdark": $altdark,
     "gray": $gray,
     "altsecondary": $altsecondary,
+    "dark": $dark,
 );
 
 // Merge the maps
@@ -34,6 +37,57 @@ $font-size-lg: $font-size-base * 0.5;
 .font-fair {
     font-family: "Playfair Display", serif;
 }
-
+.w-fit {
+    width: fit-content;
+}
+.h-fit {
+    height: fit-content !important;
+}
+.fs-sm {
+    font-size: 0.7rem;
+}
+.fs-mb {
+    font-size: 0.8rem;
+}
+.card {
+    overflow: hidden;
+}
+.image-card {
+    display: block;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 0 auto;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+.image-product {
+    display: block;
+    width: 350px;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+.image-thumbnail {
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+.flex-auto {
+    flex: auto;
+}
+.mt-large {
+    margin-top: 100px;
+}
 // Option A: Include all of Bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
