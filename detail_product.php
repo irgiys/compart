@@ -28,6 +28,7 @@ $merk = $product["merk"];
 $price = $product["price"];
 $discount = $product["discount"];
 $picture = $product["picture"];
+$quantity = $product["quantity"];
 $sold = $product["sold"];
 
 ?>
@@ -105,7 +106,7 @@ $sold = $product["sold"];
                 <h4 class="d-inline text-capitalize"> <?= $name ?></h4>
                 <!-- $product["price"] - ($product["discount"] / 100 * $product["price"] -->
                 <h6 class="pt-2">Sold <?= $sold ?></h6>
-                <h3 class="pt-4">$<?= $price - $discount / 100 * $price ?></h3>
+                <h3 class="pt-4" id="price">$<?= $price - $discount / 100 * $price ?></h3>
                 <?php if($discount > 0) : ?>
                     <span class="p-1 rounded bg-danger fw-semibold text-white"><?= $discount ?>%</span>
                     <p class="d-inline mx-1 text-decoration-line-through">$<?= $price ?></p>
@@ -128,16 +129,59 @@ $sold = $product["sold"];
             </div>
             </div>
                 <div class="col">
-                    <div class="border rounded p-4">
+                    <div class="border rounded p-3">
                         <h5>Set amount</h5>
                         <div class="d-flex align-items-center">
                             <img class="image-thumbnail" src="./assets/images/products/<?= $picture ?>" alt="<?= $name ?>">
-                            <p class="fs-mb"><?= cutword($name,20,"") ?></p>
+                            <p class="fs-mb px-3"><?= cutword($name,20,"") ?></p>
+                        </div>
+                        <div class="row align-items-center mt-2">
+                            <div class="col-md-7">
+                                <div class="input-group border rounded">
+                                    <button type="button" class="btn btn-outline-danger btn-number border-0" id="minus" data-field="quantity">-</button>
+                                    <input type="number" name="quantity" id="quantity" class="form-control input-number border-0 text-center" value="1" min="1" max="<?= $quantity ?>">
+                                    <button type="button" class="btn btn-outline-altprimary btn-number border-0" id="plus" data-field="quantity">+</button>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <?php if($quantity >= 100) : ?>
+                                    <span class="fs-sm">Stock <?= $quantity?></span>
+                                <?php else :?>
+                                <span class="fs-mb">Stock <?= $quantity?></span>
+                                <?php endif ?>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex align-items-center justify-content-between">
+                            <h6>Subtotal</h6>
+                            <h5 class="fw-semibold" id="subtotal">
+                                $
+                            </h5>
                         </div>
                     </div>
                 </div>
         </div>    
     </div>
+    <script>
+        const plus = document.getElementById("plus");
+        const minus = document.getElementById("minus");
+        const quantity = document.getElementById("quantity");
+        const subtotal= document.getElementById("subtotal");
+        const price = document.getElementById("price");
+        const actualPrice = parseFloat(price.innerText.replace("$",""));
+        
+        plus.addEventListener("click", () => {
+            let max = parseInt(quantity.max)
+            if(quantity.value < max){
+                console.log(quantity.value++)
+            }
+            // console.log(quantity.value = quantity.value - 1) 
+        })
+        minus.addEventListener("click", () => {
+            if(quantity.value > 1){
+                console.log(quantity.value = quantity.value - 1) 
+            }
+        })
+    </script>
 <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -126,7 +126,7 @@ $result = mysqli_query($conn, $query);
                                         <span class="fw-semibold">$<?= $product["price"] - ($product["discount"] / 100 * $product["price"])  ?></span>
                                         <?php if($product["discount"] > 0) :?>
                                             <div class="fs-mb pt-2">
-                                                <span class="p-1 bg-danger rounded text-white">%<?=$product["discount"]?></span>
+                                                <span class="p-1 bg-danger rounded text-white"><?=$product["discount"]?>%</span>
                                                 <span class="ps-2 text-decoration-line-through">$<?= $product["price"] ?></span>
                                             </div>
                                             <?php endif ?>
