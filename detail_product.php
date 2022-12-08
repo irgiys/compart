@@ -157,6 +157,9 @@ $sold = $product["sold"];
                                 $
                             </h5>
                         </div>
+                        <div class="mt-3 justify-content-center d-flex">
+                            <button class="btn btn-altprimary"><span>+</span> add to chart</button>
+                        </div>
                     </div>
                 </div>
         </div>    
@@ -168,18 +171,27 @@ $sold = $product["sold"];
         const subtotal= document.getElementById("subtotal");
         const price = document.getElementById("price");
         const actualPrice = parseFloat(price.innerText.replace("$",""));
-        
+        const spanText = document.createElement("span")
+        spanText.innerText = actualPrice * (parseInt(quantity.value));
+        subtotal.appendChild(spanText);
+
+        quantity.addEventListener("input", () => {
+            if(quantity.value > 0){
+                spanText.innerText = actualPrice * (parseInt(quantity.value));
+            }
+        })
         plus.addEventListener("click", () => {
             let max = parseInt(quantity.max)
             if(quantity.value < max){
-                console.log(quantity.value++)
+                spanText.innerText = actualPrice * (parseInt(quantity.value) + 1);
+                quantity.value++
             }
-            // console.log(quantity.value = quantity.value - 1) 
         })
         minus.addEventListener("click", () => {
             if(quantity.value > 1){
-                console.log(quantity.value = quantity.value - 1) 
-            }
+                 spanText.innerText = actualPrice * (parseInt(quantity.value) - 1) ;
+                 quantity.value--
+             }
         })
     </script>
 <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
