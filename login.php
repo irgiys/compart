@@ -20,9 +20,16 @@ if(isset($_COOKIE["id"]) && isset($_COOKIE["key"])){
         $_SESSION["fullname"] = $_COOKIE["fullname"];
     }
 }
+
 if(isset($_SESSION["id"])){
-    $_SESSION["role"] == 1 ? header("location:index.php") : header("location:dashboard.php");
-    exit();  
+    if($_SESSION["role"] == 1){
+        header("location:index.php");
+        // exit();  
+    }
+    if($_SESSION["role"] == 2){
+        header("location:dashboard.php");
+        // exit();  
+    }
 }
 ?>
 <!DOCTYPE html>

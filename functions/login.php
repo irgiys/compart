@@ -24,10 +24,10 @@ function login($data){
                 $_SESSION["role"] = $role;
                 if($remember){
                     // buat cookie
-                    setcookie("id", $row['id'], time() + 60);
-                    setcookie("key", hash("sha256", $row["id"]), time() + 60);
-                    setcookie("role", $role, time() + 60);
-                    setcookie("fullname", $row["fullname"],time() + 60);
+                    setcookie("id", $row['id'], time() + 3600);
+                    setcookie("key", hash("sha256", $row["id"]), time() + 3600);
+                    setcookie("role", $role, time() + 3600);
+                    setcookie("fullname", $row["fullname"],time() + 3600);
                 }
                 $role == 1 ? header("location:index.php") : header("location:dashboard.php");
                 return $row;

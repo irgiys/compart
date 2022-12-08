@@ -4,7 +4,6 @@ include("./functions/koneksi.php");
 include("./functions/cutword.php");
 user();
 $fullname = $_SESSION["fullname"];
-
 $query = "SELECT p.*, s.fullname FROM product AS p JOIN seller AS s ON (p.seller_id = s.id) WHERE deleted_at IS NULL ORDER BY p.discount DESC";
 $result = mysqli_query($conn, $query);
 ?>
@@ -91,7 +90,7 @@ $result = mysqli_query($conn, $query);
             </div>      
         </div>
         <!-- end carousel -->
-        <div class="my-5">
+        <div class="mt-5 mb-4">
             <h3>Choose by Category</h3>
         </div>
         <div class="d-flex justify-content-center">
@@ -105,11 +104,11 @@ $result = mysqli_query($conn, $query);
             <?php endwhile ?>
             <div>
                 <input type="radio" class="btn-check" name="options-outlined" id="all"  autocomplete="off" checked>
-                <label class="btn btn-outline-altdark" for="all">all</label>
+                <label class="btn btn-outline-altdark mt-2" for="all">all</label>
                 <?php foreach ($categories as $i => $category) :
                 ?>
                 <input type="radio" class="btn-check btn-category"  name="options-outlined" id="<?= $category ?>"  autocomplete="off">
-                <label class="btn btn-outline-altdark" for="<?= $category ?>"><?= $category ?></label>
+                <label class="btn btn-outline-altdark mt-2" for="<?= $category ?>"><?= $category ?></label>
                 <?php endforeach ?>
             </div>
         </div>
