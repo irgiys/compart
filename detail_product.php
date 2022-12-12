@@ -3,10 +3,19 @@ include("./functions/koneksi.php");
 include("./functions/session.php");
 include("./functions/cutword.php");
 include("./functions/product.php");
-
 user();
 $id = $_GET['id'];
+$userId = $_SESSION["id"];
+$cartQuery = "SELECT c.*, p.id, p.deleted_at
+             FROM cart_item AS c
+             JOIN product AS p ON (c.product_id = p.id)
+             WHERE user_id = '$userId' AND p.deleted_at IS NULL";
 
+$cartData = mysqli_query($conn,$cartQuery);
+$inCart = 0;
+while($data = mysqli_fetch_column($cartData)){
+    $inCart++;
+}
 $query = "SELECT p.*, pi.quantity, pi.sold, s.fullname
           FROM product AS p 
           JOIN product_inventory AS pi 
@@ -87,7 +96,7 @@ $sold = $product["sold"];
                         <div class="position-relative p-1">
                             <img src="./assets/svg/shopping-cart.svg" alt="cart">
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                1
+                                <?= $inCart ?>
                                 <span class="visually-hidden">unread messages</span>
                                 </span>
                         </div>
@@ -216,6 +225,6 @@ $sold = $product["sold"];
         })
     changeThings()
     </script>
-<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

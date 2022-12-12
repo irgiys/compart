@@ -4,6 +4,17 @@ include("./functions/koneksi.php");
 include("./functions/cutword.php");
 user();
 $fullname = $_SESSION["fullname"];
+$id = $_SESSION["id"];
+
+$cartQuery = "SELECT c.*, p.id, p.deleted_at
+             FROM cart_item AS c
+             JOIN product AS p ON (c.product_id = p.id)
+             WHERE user_id = '$id' AND p.deleted_at IS NULL";
+$cartData = mysqli_query($conn,$cartQuery);
+$inCart = 0;
+while($data = mysqli_fetch_column($cartData)){
+    $inCart++;
+}
 $query = "SELECT p.*, s.fullname 
         FROM product AS p 
         JOIN seller AS s ON (p.seller_id = s.id) 
@@ -61,7 +72,13 @@ $result = mysqli_query($conn, $query);
                         </ul>
                     </li>
                     <a class="nav-link" href="cart.php">
-                        <img class="" src="./assets/svg/shopping-cart.svg" alt="">
+                        <div class="position-relative p-1">
+                            <img src="./assets/svg/shopping-cart.svg" alt="cart">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <?= $inCart ?>
+                                <span class="visually-hidden">unread messages</span>
+                                </span>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -99,7 +116,7 @@ $result = mysqli_query($conn, $query);
         <div class="d-flex justify-content-center">
             <?php
             $categories = [];
-            while($product = mysqli_fetch_assoc($result)) : 
+            while ($product = mysqli_fetch_assoc($result)):
             $categoryName = preg_replace('/\s+/', '_', $product["category"]);
             array_push($categories,strtolower($categoryName));
             $categories = array_unique($categories);

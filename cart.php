@@ -5,16 +5,15 @@ user();
 $id = $_SESSION["id"];
 $fullname = $_SESSION["fullname"];
 
-
-$query = "SELECT c.*, p.name, p.picture, p.price, p.discount, s.fullname
+$query = "SELECT c.*, p.name, p.picture, p.price, p.discount, p.deleted_at, s.fullname
         FROM cart_item as c 
         JOIN product AS p 
             ON (c.product_id = p.id)
         JOIN seller AS s 
             ON (p.seller_id = s.id)
-        WHERE c.user_id = '$id' AND c.deleted_at IS NULL";
-
+        WHERE c.user_id = '$id' AND c.deleted_at IS NULL AND p.deleted_at IS NULL";
 $result = mysqli_query($conn, $query);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +92,7 @@ $result = mysqli_query($conn, $query);
                         </div>
                     </div>
                     <div class="d-flex">
-                        <a href="" class="btn btn-danger text-white" onclick="return confirm('Delete this product?')">
+                        <a href="delete_cart.php?id=<?= $row['id'] ?>" class="btn btn-danger text-white" onclick="return confirm('Delete this product?')">
                             <img src="./assets/svg/trash.svg" alt="" srcset="">
                         </a>
                         <button class="btn btn-altprimary ms-2">Checkout</button>
@@ -103,5 +102,6 @@ $result = mysqli_query($conn, $query);
         
         </div>
     </div>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

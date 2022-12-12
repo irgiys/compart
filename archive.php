@@ -120,12 +120,15 @@ while ($product = mysqli_fetch_assoc($result)) {
                                 </div>
                                     <span class="bg-gray p-1 text-align-left rounded fs-sm align-self-end">stock <?= $product["quantity"]?></span>
                             </div>
-                                    <div class="d-flex justify-content-between">
-                                      <a href="update_product.php?id=<?= $product["id"] ?>" class="btn btn-warning text-dark">Update</a>
-                                        <a href="restore_product.php?id=<?= $product["id"] ?>" class="btn btn-danger">
-                                            <img src="./assets/svg/refresh.svg" alt="" srcset="">
-                                        </a>
-                                    </div>
+                                <div class="d-flex justify-content-between">
+                                    <a href="update_product.php?id=<?= $product["id"] ?>" class="btn btn-warning text-dark">Update</a>
+                                    <a href="restore_product.php?id=<?= $product["id"] ?>" class="btn btn-altprimary">
+                                        <img src="./assets/svg/refresh.svg" alt="restore" >
+                                    </a>
+                                    <a href="delete_product.php?id=<?= $product["id"] ?>" class="btn btn-danger" onclick="return confirm('Delete this product?')">
+                                        <img src="./assets/svg/trash.svg" alt="restore" >
+                                    </a>
+                                </div>
                         </div>
                     </div>
                 </div>
