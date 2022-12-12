@@ -4,7 +4,10 @@ include("./functions/koneksi.php");
 include("./functions/cutword.php");
 user();
 $fullname = $_SESSION["fullname"];
-$query = "SELECT p.*, s.fullname FROM product AS p JOIN seller AS s ON (p.seller_id = s.id) WHERE deleted_at IS NULL ORDER BY p.discount DESC";
+$query = "SELECT p.*, s.fullname 
+        FROM product AS p 
+        JOIN seller AS s ON (p.seller_id = s.id) 
+        WHERE deleted_at IS NULL ORDER BY p.discount DESC";
 $result = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
@@ -57,8 +60,8 @@ $result = mysqli_query($conn, $query);
                             </li>
                         </ul>
                     </li>
-                    <a class="nav-link" href="#">
-                    <img class="" src="./assets/svg/shopping-cart.svg" alt="">
+                    <a class="nav-link" href="cart.php">
+                        <img class="" src="./assets/svg/shopping-cart.svg" alt="">
                     </a>
                 </div>
             </div>

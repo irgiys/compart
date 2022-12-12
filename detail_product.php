@@ -2,9 +2,10 @@
 include("./functions/koneksi.php");
 include("./functions/session.php");
 include("./functions/cutword.php");
+include("./functions/product.php");
+
 user();
 $id = $_GET['id'];
-// $query = "SELECT p.*, s.fullname FROM product AS p JOIN seller AS s ON (p.seller_id = s.id) WHERE deleted_at IS NULL ORDER BY p.discount DESC";
 
 $query = "SELECT p.*, pi.quantity, pi.sold, s.fullname
           FROM product AS p 
@@ -82,8 +83,14 @@ $sold = $product["sold"];
                             </li>
                         </ul>
                     </li>
-                    <a class="nav-link" href="#">
-                    <img class="" src="./assets/svg/shopping-cart.svg" alt="">
+                    <a class="nav-link" href="cart.php">
+                        <div class="position-relative p-1">
+                            <img src="./assets/svg/shopping-cart.svg" alt="cart">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                1
+                                <span class="visually-hidden">unread messages</span>
+                                </span>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -139,7 +146,7 @@ $sold = $product["sold"];
                             <div class="col-md-7">
                                 <div class="input-group border rounded">
                                     <button type="button" class="btn btn-outline-danger btn-number border-0" id="minus" data-field="quantity">-</button>
-                                    <input type="number" name="quantity" id="quantity" class="form-control input-number border-0 text-center" value="1" min="1" max="<?= $quantity ?>">
+                                    <input type="number" id="quantity" class="form-control input-number border-0 text-center" value="1" min="1" max="<?= $quantity ?>">
                                     <button type="button" class="btn btn-outline-altprimary btn-number border-0" id="plus" data-field="quantity">+</button>
                                 </div>
                             </div>
@@ -158,7 +165,13 @@ $sold = $product["sold"];
                             </h5>
                         </div>
                         <div class="mt-3 justify-content-center d-flex">
-                            <button class="btn btn-altprimary"><span>+</span> add to chart</button>
+                            <form action="./functions/cart.php" method="post">
+                                <input type="hidden" id="post_quantity" name="quantity" value="">
+                                <input type="hidden" id="post_amount" name="amount" value="">
+                                <input type="hidden" id="post_product_id" name="product_id" value="<?= $id ?>">
+                                <input type="hidden" id="post_user_id" name="user_id" value="<?= $_SESSION["id"] ?>">
+                                <button type="submit" class="btn btn-altprimary" id="submit_button">+ add to chart</button>
+                            </form>        
                         </div>
                     </div>
                 </div>
@@ -172,27 +185,36 @@ $sold = $product["sold"];
         const price = document.getElementById("price");
         const actualPrice = parseFloat(price.innerText.replace("$",""));
         const spanText = document.createElement("span")
-        spanText.innerText = actualPrice * (parseInt(quantity.value));
         subtotal.appendChild(spanText);
-
+        
+        const postQuantity =  document.getElementById("post_quantity");
+        const postAmount = document.getElementById("post_amount");
+        const submitButton = document.getElementById("submit_button");
+        
+        function changeThings(){
+            spanText.innerText = actualPrice * (parseInt(quantity.value));
+            postAmount.value = actualPrice * (parseInt(quantity.value));
+            postQuantity.value = quantity.value;
+        }
         quantity.addEventListener("input", () => {
             if(quantity.value > 0){
-                spanText.innerText = actualPrice * (parseInt(quantity.value));
+                changeThings();
             }
         })
         plus.addEventListener("click", () => {
             let max = parseInt(quantity.max)
             if(quantity.value < max){
-                spanText.innerText = actualPrice * (parseInt(quantity.value) + 1);
                 quantity.value++
+                changeThings();
             }
         })
         minus.addEventListener("click", () => {
             if(quantity.value > 1){
-                 spanText.innerText = actualPrice * (parseInt(quantity.value) - 1) ;
-                 quantity.value--
+                quantity.value--
+                changeThings();
              }
         })
+    changeThings()
     </script>
 <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
