@@ -54,14 +54,14 @@ $sold = $product["sold"];
 <body>
 <nav class="navbar navbar-expand-sm bg-white fixed-top ">
     <div class="container-fluid px-md-5 py-2">
-            <a class="navbar-brand fs-5 m-0 fw-semibold font-fair" href="index.php"> compart</a>
+            <a class="navbar-brand fs-5 m-0 fw-semibold font-fair" href="index.php">compart</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div class="navbar-nav px-4 sm:align-items-center align-items-end">
+            <div class="navbar-nav">
                 <form action="search.php" method="post">
-                    <div class="input-group">
+                    <div class="input-group me-4 col">
                             <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">                            
                             <button type="submit" class="input-group-text btn btn-gray rounded-end m-0" id="inputGroup-sizing-sm">
                                 <img src="./assets/svg/search.svg" alt="search"/>
@@ -75,37 +75,38 @@ $sold = $product["sold"];
                     <option value="Los Angeles">
                     <option value="Chicago">
                     </datalist>
-                    <li class="nav-item dropdown px-md-5 py-2 py-md-0">
-                        <a class="nav-link dropdown-toggle after-none" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
-                            <?= $fullname ?>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item d-flex justify-content-around" href="profile_seller.php"> 
-                                <span>Profile</span><img src="./assets/svg/chevron-right.svg" alt="right">
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item d-flex justify-content-around" href="./functions/logout.php">
-                                <span>Logout</span>
-                                <img src="./assets/svg/chevron-right.svg" alt="right"></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <a class="nav-link" href="cart.php">
+                    <a class="nav-link py-0 ps-4" href="cart.php">
                         <div class="position-relative p-1">
                             <img src="./assets/svg/shopping-cart.svg" alt="cart">
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 <?= $inCart ?>
-                                <span class="visually-hidden">unread messages</span>
+                                <span class="visually-hidden">In cart</span>
                                 </span>
+                            </div>
+                    </a>
+                    <a class="nav-link py-0 pe-4" href="cart.php">
+                        <div class="position-relative p-1">
+                            <img src="./assets/svg/clipboard-text.svg" alt="cart">
+                                <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <?= $inCart ?>
+                                <span class="visually-hidden">unread messages</span>
+                                </span> -->
                         </div>
                     </a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                                <?= $fullname ?>
+                            </a>
+                            <ul class="dropdown-menu-end dropdown-menu">
+                                <li><a class="dropdown-item" href="profile_seller.php">Profile</a></li>
+                                <li><a class="dropdown-item" href="./functions/logout.php">Logout</a></li>
+                     </ul>
                 </div>
             </div>
         </div>
     </nav>
-    <div class="container-fluid mt-large px-md-5">
+<div class="container-fluid mt-large px-md-5">
         <!-- navigasi -->
         <nav>
             <a class="text-decoration-none" href="index.php">Home </a>
