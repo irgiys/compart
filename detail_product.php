@@ -99,7 +99,7 @@ $sold = $product["sold"];
                                 <?= $fullname ?>
                             </a>
                             <ul class="dropdown-menu-end dropdown-menu">
-                                <li><a class="dropdown-item" href="profile_seller.php">Profile</a></li>
+                                 <li><a class="dropdown-item" href="profile_user.php">Profile</a></li>
                                 <li><a class="dropdown-item" href="./functions/logout.php">Logout</a></li>
                      </ul>
                 </div>
@@ -194,15 +194,16 @@ $sold = $product["sold"];
         const subtotal= document.getElementById("subtotal");
         const price = document.getElementById("price");
         const actualPrice = parseFloat(price.innerText.replace("$",""));
-        const spanText = document.createElement("span")
-        subtotal.appendChild(spanText);
+        const spanSubtotal = document.createElement("span")
+        subtotal.appendChild(spanSubtotal);
         
         const postQuantity =  document.getElementById("post_quantity");
         const postAmount = document.getElementById("post_amount");
         const submitButton = document.getElementById("submit_button");
         
         function changeThings(){
-            spanText.innerText = actualPrice * (parseInt(quantity.value));
+            let num = actualPrice * (parseInt(quantity.value));
+            spanSubtotal.innerText = num.toFixed(1);
             postAmount.value = actualPrice * (parseInt(quantity.value));
             postQuantity.value = quantity.value;
         }

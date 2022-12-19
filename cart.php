@@ -64,14 +64,13 @@ $result = mysqli_query($conn, $query);
                                 <?= $fullname ?>
                             </a>
                             <ul class="dropdown-menu-end dropdown-menu">
-                                <li><a class="dropdown-item" href="profile_seller.php">Profile</a></li>
+                                <li><a class="dropdown-item" href="profile_user.php">Profile</a></li>
                                 <li><a class="dropdown-item" href="./functions/logout.php">Logout</a></li>
-                     </ul>
+                            </ul>
                 </div>
             </div>
         </div>
     </nav>
-    
 <div class="container-fluid px-5 mt-large">
         <h2>All</h2>
         <div class="mt-2 d-flex flex-column align-items-center">
@@ -97,7 +96,7 @@ $result = mysqli_query($conn, $query);
                         <a href="delete_cart.php?id=<?= $row['id'] ?>" class="btn btn-danger text-white" onclick="return confirm('Delete this product?')">
                             <img src="./assets/svg/trash.svg" alt="" srcset="">
                         </a>
-                        <button class="btn btn-altprimary ms-2">Checkout</button>
+                        <a class="btn btn-altprimary ms-2" href="checkout.php?id=<?= $row['id'] ?>">Checkout</a>
                     </div>
                 </div>
             <?php endwhile ?>

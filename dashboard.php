@@ -57,7 +57,7 @@ while ($product = mysqli_fetch_assoc($result)) {
                 <a class="nav-link active" aria-current="page" href="dashboard.php">Overview</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Report</a>
+                <a class="nav-link" href="report.php">Report</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="archive.php">Archive</a>

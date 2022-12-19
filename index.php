@@ -66,10 +66,6 @@ $result = mysqli_query($conn, $query);
                     <a class="nav-link py-0 pe-4" href="cart.php">
                         <div class="position-relative p-1">
                             <img src="./assets/svg/clipboard-text.svg" alt="cart">
-                                <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                <?= $inCart ?>
-                                <span class="visually-hidden">unread messages</span>
-                                </span> -->
                         </div>
                     </a>
                     <ul class="navbar-nav">
@@ -78,7 +74,7 @@ $result = mysqli_query($conn, $query);
                                 <?= $fullname ?>
                             </a>
                             <ul class="dropdown-menu-end dropdown-menu">
-                                <li><a class="dropdown-item" href="profile_seller.php">Profile</a></li>
+                                <li><a class="dropdown-item" href="profile_user.php">Profile</a></li>
                                 <li><a class="dropdown-item" href="./functions/logout.php">Logout</a></li>
                      </ul>
                 </div>

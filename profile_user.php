@@ -1,15 +1,16 @@
 <?php 
 include("./functions/session.php");
 include("./functions/koneksi.php");
-include("./functions/seller.php");
-seller();
+include("./functions/user.php");
+user();
 $fullname = $_SESSION["fullname"];
 $id = $_SESSION["id"];
-$query = "SELECT * FROM seller WHERE id = '$id'";
+
+$query = "SELECT * FROM user WHERE id = '$id'";
 $result = mysqli_query($conn, $query);
 $seller = mysqli_fetch_assoc($result);
 
-$queryAddress = "SELECT * FROM seller_address WHERE seller_id = '$id'";
+$queryAddress = "SELECT * FROM user_address WHERE user_id = '$id'";
 $resultAddress = mysqli_query($conn, $queryAddress);
 $address = mysqli_fetch_assoc($resultAddress);
 
@@ -17,7 +18,7 @@ if($address === NULL){
     if(isset($_POST["fullname"])){
         if(addAddress($_POST) > 0){       
             echo "<script>
-                alert('Profile successfuly updated !')
+            alert('Profile successfuly updated !')
             </script>";
         }
     }
@@ -33,7 +34,7 @@ if($address === NULL){
         }
     }
 }
-// echo $_POST["fullname"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,11 +51,11 @@ if($address === NULL){
                 <div class="col-sm-4 d-lg-flex flex-column justify-content-center d-none bg-altprimary p-5">
                     <h1 class="text-capitalize"><?= $fullname ?>'s</h1>
                     <h2>Profile</h2>
-                    <img class="image-fluid" src="./assets/svg/orangpaket.svg" alt="gambar orang">
+                    <img class="image-fluid" src="./assets/svg/oranglaptop.svg" alt="gambar orang">
                 </div>
                 <div class="col">
                     <form action="" method="POST" class="d-flex justify-content-center">
-                        <input type="hidden" name="seller_id" value="<?= $id ?>">
+                        <input type="hidden" name="user_id" value="<?= $id ?>">
                         <div class="d-flex flex-column justify-content-center vh-100 w-75  px-md-5 px-sm-1">
                             <div class="d-lg-none">
                                 <h1 class="text-capitalize"><?= $fullname ?>'s</h1>
