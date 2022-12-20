@@ -132,7 +132,7 @@ if (isset($_POST["name"])) {
                 </div>
                 <div class="mb-3 ">
                     <a href="dashboard.php" class="btn btn-altsecondary text-white px-3 fs-sm">
-                        << /a>
+                        < </a>
                             <button type="submit" class="btn btn-altprimary px-5 text-white">Upload</button>
                 </div>
             </form>

@@ -6,7 +6,7 @@ seller();
 $fullname = $_SESSION["fullname"];
 $seller_id = $_SESSION["id"];
 
-$query = "SELECT p.id, p.name, p.desc, p.merk, p.picture, p.price, p.discount, p.modified_at ,p.deleted_at, pi.quantity, pi.id AS inventory_id
+$query = "SELECT p.id, p.name, p.desc, p.merk, p.picture, p.price, p.discount, p.modified_at ,p.deleted_at, pi.quantity, pi.sold , pi.id AS inventory_id
             FROM product AS p
             JOIN product_inventory AS pi ON (p.inventory_id = pi.id) WHERE p.deleted_at IS NULL AND p.seller_id = '$seller_id' ORDER BY p.modified_at DESC";
 $result = mysqli_query($conn, $query);
@@ -14,6 +14,7 @@ $products = [];
 while ($product = mysqli_fetch_assoc($result)) {
     $products[] = $product;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +86,7 @@ while ($product = mysqli_fetch_assoc($result)) {
                 </div>
             </div>
         </div>
-        <div class="row mt-4 justify-content-around">
+        <div class="row mt-4 justify-content-center">
             <div class="d-none h-100" id="result">
                 <h1>
                     No Results Found

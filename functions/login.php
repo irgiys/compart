@@ -9,12 +9,15 @@ function login($data)
         $password = $data["password"];
         $role = $data["role"];
         $remember = isset($data["check"]);
+        // user
         if ($role == 1) {
             $result = mysqli_query($conn, "SELECT * FROM user WHERE username = '$username'");
         }
+        // seller
         if ($role == 2) {
             $result = mysqli_query($conn, "SELECT * FROM seller WHERE username = '$username'");
         }
+        // admin
         if ($role == 3) {
             $result = mysqli_query($conn, "SELECT * FROM `admin` WHERE username = '$username'");
         }
@@ -40,7 +43,7 @@ function login($data)
                     header("location:dashboard.php");
                 }
                 if ($role == 3) {
-                    header("location:dashboard_admin.php");
+                    header("location:admin_dashboard.php");
                 }
                 return $row;
             }

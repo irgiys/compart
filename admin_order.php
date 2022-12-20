@@ -2,9 +2,8 @@
 include("./functions/session.php");
 include("./functions/koneksi.php");
 include("./functions/cutword.php");
-seller();
+admin();
 $fullname = $_SESSION["fullname"];
-$seller_id = $_SESSION["id"];
 
 $queryCheckout = "SELECT c.*, p.name, p.picture, p.price, p.discount, p.deleted_at, u.fullname
                 FROM checkout_session as c 
@@ -14,7 +13,7 @@ $queryCheckout = "SELECT c.*, p.name, p.picture, p.price, p.discount, p.deleted_
                     ON (p.seller_id = s.id)
                 JOIN user AS u
                     ON (c.user_id = u.id)
-                WHERE c.seller_id = '$seller_id' AND c.deleted_at IS NULL AND p.deleted_at IS NULL";
+                WHERE  c.deleted_at IS NULL AND p.deleted_at IS NULL";
 
 $result = mysqli_query($conn, $queryCheckout);
 ?>
@@ -25,7 +24,7 @@ $result = mysqli_query($conn, $queryCheckout);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Seller</title>
+    <title>Dasboard Seller</title>
     <link rel="stylesheet" href="css/custom.min.css" />
 
 </head>
@@ -59,16 +58,16 @@ $result = mysqli_query($conn, $queryCheckout);
     <div class="container-fluid px-md-5 mb-3">
         <ul class="nav nav-pills py-3">
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="dashboard.php">Overview</a>
+                <a class="nav-link" aria-current="page" href="admin_dashboard.php">Overview</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="report.php">Report</a>
+                <a class="nav-link" href="admin_report.php">Report</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="archive.php">Archive</a>
+                <a class="nav-link" href="admin_archive.php">Archive</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="order.php">Order</a>
+                <a class="nav-link active" href="admin_order.php">Order</a>
             </li>
         </ul>
         <div>
@@ -112,7 +111,7 @@ $result = mysqli_query($conn, $queryCheckout);
                         <div class="d-flex mt-3">
                             <img class="image-thumbnail" src="./assets/images/products/<?= $row["picture"] ?>" alt="">
                             <div class="ps-4">
-                                <a href="http://localhost/compart/checkout_detail.php?id=<?= $row["id"] ?>" class="text-decoration-none text-dark fs-6 fw-semibold"><?= cutword($row["name"], 40) ?></a>
+                                <a href="http://localhost/compart/checkout_detail.php?id=<?= $row["id"] ?>" class="text-decoration-none text-dark fs-5 fw-semibold"><?= cutword($row["name"], 30) ?></a>
                                 <p class="pt-4" id="price">$<?= $row["price"] - $row["discount"] / 100 * $row["price"] ?> x <?= $row["quantity"] ?></p>
                                 <p id="price">Total <span class="fw-semibold">
                                         $<?= ($row["price"] - $row["discount"] / 100 * $row["price"]) * $row["quantity"] ?>
@@ -132,7 +131,6 @@ $result = mysqli_query($conn, $queryCheckout);
                             </a>
                         <?php endif ?>
                         <?php if ($row["status"] == 1) : ?>
-                            <!-- <a class="btn btn-danger h-fit" href="delete_checkout.php?id=<?= $row['id'] ?>" disabled>Delete</a> -->
                             <a class="btn btn-altprimary h-fit" href="#">
                                 Shiping
                             </a>

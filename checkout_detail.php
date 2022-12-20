@@ -96,8 +96,10 @@ if ($result === NULL) {
                         <h4>$<?= $result["total"] ?></h4>
                     </div>
                     <div>
-                        <a href="order.php" class="btn btn-altsecondary text-white px-3 mt-3 fs-sm">
-                            < </a>
+                        <?php if ($_SESSION["role"] == '2') : ?>
+                            <a href="order.php" class="btn btn-altsecondary text-white px-3 mt-3 fs-sm">
+                                < </a>
+                                <?php endif ?>
                     </div>
                 </div>
             </form>

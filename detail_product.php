@@ -16,12 +16,13 @@ $inCart = 0;
 while ($data = mysqli_fetch_column($cartData)) {
     $inCart++;
 }
-$query = "SELECT p.*, pi.quantity, pi.sold, s.fullname
+$query = "SELECT p.id,p.category, p.name, p.desc, p.merk, p.picture, p.price, p.discount, p.modified_at ,p.deleted_at, pi.quantity, pi.sold , pi.id AS inventory_id, s.fullname
           FROM product AS p 
           JOIN product_inventory AS pi 
-                ON (p.inventory_id = pi.id)
-          JOIN seller AS s
-                ON (p.seller_id = s.id) WHERE p.id = '$id'";
+            ON (p.inventory_id = pi.id)
+          JOIN seller AS s 
+            ON (p.seller_id = s.id) 
+          WHERE p.id = '$id'";
 $result = mysqli_query($conn, $query);
 $product = mysqli_fetch_assoc($result);
 if ($product === null) {

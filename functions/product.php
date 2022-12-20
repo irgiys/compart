@@ -74,13 +74,13 @@ function upload()
 function updateProduct($data, $id, $idInventory)
 {
     global $conn;
-    $name = $data["name"];
-    $desc = $data["desc"];
-    $category = $data["category"];
-    $merk = $data["merk"];
-    $price = $data["price"];
-    $quantity = $data["quantity"];
-    $discount = $data["discount"];
+    $name = htmlspecialchars($data["name"]);
+    $desc = htmlspecialchars($data["desc"]);
+    $category = htmlspecialchars($data["category"]);
+    $merk = htmlspecialchars($data["merk"]);
+    $price = htmlspecialchars($data["price"]);
+    $quantity = htmlspecialchars($data["quantity"]);
+    $discount = htmlspecialchars($data["discount"]);
     $oldPicture = $data["oldPicture"];
     $modified_at = date("Y-m-d H:i:s");
     if ($_FILES["picture"]["error"] == 4) {
