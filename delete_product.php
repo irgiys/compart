@@ -10,4 +10,3 @@ $query = "DELETE FROM product WHERE id = '$id' AND seller_id = '$sellerId'";
 mysqli_query($conn, $query);
 $conn->close();
 header("location:archive.php");
-?>

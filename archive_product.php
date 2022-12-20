@@ -1,4 +1,4 @@
-<?php 
+<?php
 include("./functions/koneksi.php");
 include("./functions/session.php");
 
@@ -9,4 +9,3 @@ $query = "UPDATE `product` SET `deleted_at` = '$deleted_at' WHERE `product`.`id`
 mysqli_query($conn, $query);
 $conn->close();
 header("location:dashboard.php");
-?>

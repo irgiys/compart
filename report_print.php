@@ -17,6 +17,7 @@ while ($product = mysqli_fetch_assoc($result)) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,6 +25,7 @@ while ($product = mysqli_fetch_assoc($result)) {
     <title>Report Seller</title>
     <link rel="stylesheet" href="css/custom.min.css" />
 </head>
+
 <body>
     <div class="container-fluid px-md-5">
         <div class="row mt-4 justify-content-around">
@@ -42,19 +44,19 @@ while ($product = mysqli_fetch_assoc($result)) {
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($products as $key => $product) :?>
-                <tr>
-                        <th><?= $product["id"] ?></th>
-                        <td><?= $product["name"] ?></td>
-                        <td>$<?= $product["price"] ?></td>
-                        <td><?= $product["quantity"] ?></td>
-                        <td><?= $product["discount"] ?>%</td>
-                        <td><?= $product["sold"] ?></td>
-                        <td><?= $product["merk"] ?></td>
-                        <td><?= $product["category"] ?></td>
-                        <td><?= cutword($product["created_at"],10,"") ?></td>
-                    </tr>
-                <?php endforeach ?>
+                    <?php foreach ($products as $key => $product) : ?>
+                        <tr>
+                            <th><?= $product["id"] ?></th>
+                            <td><?= $product["name"] ?></td>
+                            <td>$<?= $product["price"] ?></td>
+                            <td><?= $product["quantity"] ?></td>
+                            <td><?= $product["discount"] ?>%</td>
+                            <td><?= $product["sold"] ?></td>
+                            <td><?= $product["merk"] ?></td>
+                            <td><?= $product["category"] ?></td>
+                            <td><?= cutword($product["created_at"], 10, "") ?></td>
+                        </tr>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>
@@ -67,4 +69,5 @@ while ($product = mysqli_fetch_assoc($result)) {
     </script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

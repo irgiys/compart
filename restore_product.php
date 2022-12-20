@@ -10,4 +10,3 @@ $query = "UPDATE `product` SET `modified_at` = '$modified_at', `deleted_at` = NU
 mysqli_query($conn, $query);
 $conn->close();
 header("location:archive.php");
-?>

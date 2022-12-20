@@ -1,4 +1,4 @@
-<?php 
+<?php
 include("./functions/koneksi.php");
 include("./functions/session.php");
 user();
@@ -17,50 +17,47 @@ $result = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
     <link rel="stylesheet" href="css/custom.min.css" />
-
 </head>
+
 <body>
-<nav class="navbar navbar-expand-sm bg-white fixed-top ">
-    <div class="container-fluid px-md-5 py-2">
+    <nav class="navbar navbar-expand-sm bg-white fixed-top ">
+        <div class="container-fluid px-md-5 py-2">
             <a class="navbar-brand fs-5 m-0 fw-semibold font-fair" href="index.php"> compart</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <form action="search.php" method="post">
-                    <div class="input-group me-4 col">
-                            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">                            
+                <div class="navbar-nav">
+                    <form action="search.php" method="post">
+                        <div class="input-group me-4 col">
+                            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
                             <button type="submit" class="input-group-text btn btn-gray rounded-end m-0" id="inputGroup-sizing-sm">
-                                <img src="./assets/svg/search.svg" alt="search"/>
+                                <img src="./assets/svg/search.svg" alt="search" />
                             </button>
                         </div>
                     </form>
                     <datalist id="datalistOptions">
-                    <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago">
+                        <option value="San Francisco">
+                        <option value="New York">
+                        <option value="Seattle">
+                        <option value="Los Angeles">
+                        <option value="Chicago">
                     </datalist>
-                    <a class="nav-link py-0 px-4" href="cart.php">
+                    <a class="nav-link py-0 px-4" href="checkout_status.php">
                         <div class="position-relative p-1">
                             <img src="./assets/svg/clipboard-text.svg" alt="cart">
-                                <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                <?= $inCart ?>
-                                <span class="visually-hidden">unread messages</span>
-                                </span> -->
                         </div>
                     </a>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <?= $fullname ?>
                             </a>
                             <ul class="dropdown-menu-end dropdown-menu">
@@ -71,12 +68,13 @@ $result = mysqli_query($conn, $query);
             </div>
         </div>
     </nav>
-<div class="container-fluid px-5 mt-large">
+    <div class="container-fluid px-5 mt-large">
         <h2>All</h2>
         <div class="mt-2 d-flex flex-column align-items-center">
             <?php
-                $row = [];
-                while($row = mysqli_fetch_assoc($result)) : ?>
+            $i = 0;
+            $row = [];
+            while ($row = mysqli_fetch_assoc($result)) : ?>
                 <div class="m-2 border w-cart p-4 d-flex align-items-end justify-content-between">
                     <div class="d-flex flex-column">
                         <div class="d-flex align-items-start">
@@ -99,10 +97,14 @@ $result = mysqli_query($conn, $query);
                         <a class="btn btn-altprimary ms-2" href="checkout.php?id=<?= $row['id'] ?>">Checkout</a>
                     </div>
                 </div>
+                <?php $i++ ?>
             <?php endwhile ?>
-        
+            <?php if ($i < 1) : ?>
+                <p>Cart IS emptyy</p>
+            <?php endif ?>
         </div>
     </div>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

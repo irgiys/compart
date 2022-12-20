@@ -1,6 +1,7 @@
 <?php
 include("koneksi.php");
-function addChart($data){
+function addChart($data)
+{
     global $conn;
     $amount = $data["amount"];
     $quantity = $data["quantity"];
@@ -13,7 +14,7 @@ function addChart($data){
     // cek apakah sudah ada product yang sama di chart
     $cekQuery = "SELECT product_id, user_id FROM cart_item WHERE product_id = '$product_id' AND user_id = '$user_id'";
     $result = mysqli_query($conn, $cekQuery);
-    if(mysqli_fetch_assoc($result) !== NULL){
+    if (mysqli_fetch_assoc($result) !== NULL) {
         $query = "UPDATE `cart_item` 
                 SET `amount` = `amount` + $amount, `quantity` = `quantity` + $quantity, `modified_at` = '$created_at'
                 WHERE product_id = '$product_id' AND user_id = '$user_id'";
@@ -31,5 +32,4 @@ function addChart($data){
 addChart($_POST);
 $id = $_POST["product_id"];
 $url = "/compart/detail_product.php?id=" . $id;
-header("location:$url")
-?>
+header("location:$url");
