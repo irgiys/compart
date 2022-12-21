@@ -1,0 +1,159 @@
+<?php
+include("./functions/session.php");
+include("./functions/koneksi.php");
+include("./functions/cutword.php");
+admin();
+$fullname = $_SESSION["fullname"];
+$seller_id = $_SESSION["id"];
+
+$query = "SELECT p.id, p.name, p.desc, p.merk, p.picture, p.price, p.discount, p.modified_at ,p.deleted_at, pi.quantity, pi.id AS inventory_id, s.fullname
+            FROM product AS p
+            JOIN product_inventory AS pi ON (p.inventory_id = pi.id) 
+            JOIN seller AS s ON (p.seller_id = s.id)
+            WHERE p.deleted_at IS NULL ORDER BY p.modified_at DESC";
+$result = mysqli_query($conn, $query);
+$products = [];
+while ($product = mysqli_fetch_assoc($result)) {
+    $products[] = $product;
+}
+// var_dump($_SESSION);
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dasboard Seller</title>
+    <link rel="stylesheet" href="css/custom.min.css" />
+
+</head>
+
+<body class="min-vh-100">
+    <nav class="navbar navbar-expand-sm bg-light">
+        <div class="container-fluid px-md-5">
+            <a class="navbar-brand fs-5 m-0 fw-semibold font-fair" href="dashboard.php"> compart
+                <span class="ms-4 translate-middle badge rounded-pill bg-altsecondary">admin</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link px-4" href="#">Faq</a>
+                    <a class="nav-link px-4" href="#">Help</a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?= $fullname ?>
+                            </a>
+                            <ul class="dropdown-menu-end dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="./functions/logout.php">Logout</a></li>
+                            </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid px-md-5 mb-3">
+        <ul class="nav nav-pills py-3">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="admin_dashboard.php">Overview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin_report.php">Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin_archive.php">Archive</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin_order.php">Order</a>
+            </li>
+        </ul>
+        <div class="mt-3">
+            <div class="d-flex justify-content-between w-100">
+                <div class="col">
+                    <input type="search" class="form-control" placeholder="Search Product" aria-label="Search Box" id="searchInput" oninput="setTimeout(()=>search(),500)">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 justify-content-around">
+            <div class="d-none h-100" id="result">
+                <h1>
+                    No Results Found
+                </h1>
+                <p>
+                    Your search did not return any results.
+                </p>
+            </div>
+            <?php foreach ($products as $key => $product) : ?>
+                <!-- strlen($product["name"])  -->
+                <div class="card col-sm-4 m-2" style="width: 14rem;" id="product">
+                    <img src="./assets/images/products/<?= $product["picture"] ?>" class="image-card">
+                    <div class="d-flex flex-column justify-content-between flex-auto flex-auto pb-3">
+                        <h6 class="card-title mt-2"><?= cutword($product["name"], 40) ?></h6>
+                        <div>
+                            <?php if (strlen($product["name"]) < 30) { ?>
+                                <p class="fs-sm mb-1"><?= cutword($product["desc"], 80) ?></p>
+                            <?php } elseif (strlen($product["name"]) < 50) { ?>
+                                <p class="fs-sm mb-1"><?= cutword($product["desc"], 40) ?></p>
+                            <?php } else { ?>
+                                <p class="fs-sm mb-1"><?= cutword($product["desc"], 20) ?></p>
+                            <?php } ?>
+                            <p class="fs-sm mt-1 fw-semibold"><?= $product["merk"] ?></p>
+                        </div>
+                        <div>
+                            <div class="pb-2 d-flex justify-content-between">
+                                <div class="d-flex flex-column">
+                                    <span class="fw-semibold">$<?= $product["price"] - ($product["discount"] / 100 * $product["price"])  ?></span>
+                                    <?php if ($product["discount"] > 0) : ?>
+                                        <div class="fs-mb pt-2">
+                                            <span class="p-1 bg-danger rounded text-white"><?= $product["discount"] ?>%</span>
+                                            <span class="ps-2 text-decoration-line-through">$<?= $product["price"] ?></span>
+                                        </div>
+                                    <?php endif ?>
+                                </div>
+                                <span class="bg-gray p-1 text-align-left rounded fs-sm align-self-end">stock <?= $product["quantity"] ?></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="align-self-end">
+                                    <h6 class="m-0">
+                                        <img src="./assets/svg/user.svg" alt="user" width="10" height="10">
+                                        <?= $product["fullname"] ?>
+                                    </h6>
+                                </div>
+                                <a href="archive_product.php?id=<?= $product["id"] ?>" class="btn btn-danger text-white">
+                                    <img src="./assets/svg/archive.svg" alt="" srcset="" width="20" height="20">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+    </div>
+    <!-- <footer class="bg-gray mt-5 p-5 text-center">
+        Made with ☕ by Kelompok 4 🤝 
+    </footer> -->
+    <script>
+        function search() {
+            let searchInput = document.getElementById("searchInput").value;
+            let result = document.getElementById("result");
+            let products = document.querySelectorAll("#product")
+            let i = 0
+            products.forEach(product => {
+                if (product.innerText.toLowerCase().includes(searchInput.toLowerCase())) {
+                    product.classList.remove("d-none");
+                    i++;
+                } else {
+                    product.classList.add("d-none");
+                }
+            });
+            i === 0 ? result.classList.remove("d-none") : result.classList.add("d-none");
+        }
+    </script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

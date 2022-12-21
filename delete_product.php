@@ -1,12 +1,12 @@
 <?php 
 include("./functions/koneksi.php");
 include("./functions/session.php");
-include("./functions/product.php");
 seller();
+
 $id = $_GET['id'];
+$sellerId = $_SESSION["id"];
 $deleted_at = date("Y-m-d H:i:s");
-$query = "UPDATE `product` SET `deleted_at` = '$deleted_at' WHERE `product`.`id` = $id";
+$query = "DELETE FROM product WHERE id = '$id' AND seller_id = '$sellerId'";
 mysqli_query($conn, $query);
 $conn->close();
-header("location:dashboard.php");
-?>
+header("location:archive.php");
